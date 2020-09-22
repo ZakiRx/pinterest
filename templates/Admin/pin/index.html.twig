@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'List Pin' %}
+
+{% block body %}
+    <h2 class="text-center mb-3"> List Pins</h2>
+    <a href="{{ path('admin_create_pin') }}" class="btn btn-primary mb-3">New Pin</a>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        {% for pin in pins %}
+        <tr>
+            <td>{{ pin.title}}</td>
+            <td>{{ pin.description}}</td>
+            <td>
+                <a href="{{ path('admin_edit_pin',{id:pin.id}) }}" class="btn btn-info">Edit</a>
+                <form onsubmit="return confirm('Are you sure ?');" method="post" action="{{ path('admin_delete_pin',{id:pin.id}) }}" class="d-inline">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete_pin'~pin.id) }}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
