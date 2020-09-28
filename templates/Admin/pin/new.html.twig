@@ -1,13 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/partials/base.html.twig' %}
 
 {% block title 'New Pin' %}
 
 {% block body %}
     <h2 class="text-center mb-3"> New Pin</h2>
 
-    {{ form_start(form) }}
-    <input type="hidden" name="_token" value="{{ csrf_token("create_pin"~pin.id) }}">
-    {{ form_rest(form) }}
-    <button type="submit" class="btn btn-primary">New</button>
-    {{ form_end(form) }}
+    {{ include('Admin/pin/_form.html.twig',{textButton:"Create"}) }}
 {% endblock %}

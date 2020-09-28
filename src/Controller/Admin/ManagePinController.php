@@ -44,10 +44,11 @@ class ManagePinController extends AbstractController
         $form=$this->createForm(PinType::class,$pin);
 
         $form->handleRequest($request);
-        if($this->isCsrfTokenValid("create_pin". $pin->getId(),$request->get("_token"))) {
+        if($this->isCsrfTokenValid("pin". $pin->getId(),$request->get("_token"))) {
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->em->persist($pin);
                 $this->em->flush();
+                $this->addFlash("success","Pin Has Been Added");
                 return $this->redirectToRoute("admin_pins_index");
 
             }else{
@@ -80,9 +81,10 @@ class ManagePinController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            if($this->isCsrfTokenValid("edit_pin". $pin->getId(),$request->get("_token"))) {
+            if($this->isCsrfTokenValid("pin". $pin->getId(),$request->get("_token"))) {
                 $this->em->persist($pin);
                 $this->em->flush();
+                $this->addFlash("success","Pin Has Been updated");
                 return $this->redirectToRoute("admin_pins_index");
             }else{
                 return $this->render("Admin/pin/edit.html.twig",[
@@ -112,6 +114,7 @@ class ManagePinController extends AbstractController
           if($this->isCsrfTokenValid("delete_pin". $pin->getId(),$request->get("_token"))){
               $this->em->remove($pin);
               $this->em->flush();
+              $this->addFlash("success","Pin Has Been Deleted");
               return $this->redirectToRoute("admin_pins_index");
           }
             return $this->redirectToRoute("admin_pins_index");
