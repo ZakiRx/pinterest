@@ -4,3 +4,22 @@
 body {
     background-color: $whiteColor;
 }
+
+
+.list-pins{
+    .pin-img img{
+        transition:transform 1s ease-out;
+        &:hover{
+            transform: scale(1.1);
+
+        }
+    }
+}
+.form-pin{
+
+    form a img{
+
+        @extend .w-25;
+        @extend .img-thumbnail;
+    }
+}
