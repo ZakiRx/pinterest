@@ -1,6 +1,7 @@
 
 @import "shared/variables";
 @import "~bootstrap/scss/bootstrap";
+
 body {
     background-color: $whiteColor;
 }
@@ -15,11 +16,19 @@ body {
         }
     }
 }
-.form-pin{
+.form-pin {
 
-    form a img{
+    form {
+        text-align: center;
+        a{
 
-        @extend .w-25;
-        @extend .img-thumbnail;
+            img{
+                @extend .w-25;
+                @extend .img-thumbnail;
+
+            }
+        }
+
+
     }
 }
