@@ -23,6 +23,8 @@
                           <h4 class="mb-3 text-muted">{{ pin.title}}</h4>
                           <p>{{ pin.description}}</p>
 
+                          <small>Created By {{ pin.user.fullName }}</small>
+
                       </div>
                       <div class="actions py-2 px-3">
                           <a href="{{ path('admin_edit_pin',{id:pin.id}) }}" class="btn btn-light">Edit</a>

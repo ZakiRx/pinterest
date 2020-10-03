@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Pin;
 use App\Form\PinType;
 use App\Repository\PinRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,14 +39,17 @@ class ManagePinController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function  new(Request $request):Response{
+    public function  new(Request $request,UserRepository $userRepository):Response{
         $pin = new Pin();
+        $user= $userRepository->findOneBy(["username"=>"zaki"]);
+
 
         $form=$this->createForm(PinType::class,$pin);
 
         $form->handleRequest($request);
         if($this->isCsrfTokenValid("pin". $pin->getId(),$request->get("_token"))) {
             if ($form->isSubmitted() && $form->isValid()) {
+                $pin->setUser($user);
                 $this->em->persist($pin);
                 $this->em->flush();
                 $this->addFlash("success","Pin Has Been Added");
