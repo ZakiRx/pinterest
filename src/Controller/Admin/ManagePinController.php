@@ -41,7 +41,6 @@ class ManagePinController extends AbstractController
      */
     public function  new(Request $request,UserRepository $userRepository):Response{
         $pin = new Pin();
-        $user= $userRepository->findOneBy(["username"=>"zaki"]);
 
 
         $form=$this->createForm(PinType::class,$pin);
@@ -49,7 +48,7 @@ class ManagePinController extends AbstractController
         $form->handleRequest($request);
         if($this->isCsrfTokenValid("pin". $pin->getId(),$request->get("_token"))) {
             if ($form->isSubmitted() && $form->isValid()) {
-                $pin->setUser($user);
+                $pin->setUser($this->getUser());
                 $this->em->persist($pin);
                 $this->em->flush();
                 $this->addFlash("success","Pin Has Been Added");
