@@ -4,20 +4,45 @@
 
 {% block body %}
 
+<div class="row">
+    <div class="col-md-6 mx-auto shadow py-5 mb-5 px-5" >
+        <h1 class="text-center font-weight-bolder mb-3 h3">Create an account</h1>
 
-    <h1>Register</h1>
+        {{ form_start(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
+        <div class="form-row">
+            <div class="col-md-6">
+                {{ form_row(registrationForm.username) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(registrationForm.fullName) }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                {{ form_row(registrationForm.email) }}
+            </div>
+        </div>
 
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.fullName) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <div class="form-row">
+            <div class="col">
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 ">
+                <button type="submit" class="btn btn-primary d-block w-100 mb-3">Register</button>
+                <p class="text-muted text-center">Already have an account ? <a href="{{ path('app_login') }}" class="text-primary">Login</a></p>
 
-        <button type="submit" class="btn btn-primary">Register</button>
+            </div>
 
-    {{ form_end(registrationForm) }}
+        </div>
+
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+
 {% endblock %}
