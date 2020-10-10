@@ -3,25 +3,36 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Pin;
+use App\Entity\User;
 use App\Form\PinType;
 use App\Repository\PinRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class ManagePinController extends AbstractController
 {
 
     private $em;
     private $repository;
+    private $isVerified="";
 
-    public  function  __construct(EntityManagerInterface $em,PinRepository $repository)
+
+    public  function  __construct(EntityManagerInterface $em,PinRepository $repository,Security $security)
     {
         $this->em=$em;
         $this->repository=$repository;
+        if($security->getUser()) {
+            $user = $security->getUser();
+            if ($user instanceof User) {
+                $this->isVerified = $user->isVerified();
+            }
+        }
     }
 
     /**
@@ -31,7 +42,9 @@ class ManagePinController extends AbstractController
     {
         $pins=$this->repository->findAll();
 
-        return $this->render("Admin/pin/index.html.twig",compact("pins"));
+        return $this->render("Admin/pin/index.html.twig",[
+            "pins"=>$pins
+            ]);
     }
 
     /**
@@ -40,34 +53,40 @@ class ManagePinController extends AbstractController
      * @return Response
      */
     public function  new(Request $request,UserRepository $userRepository):Response{
-        $pin = new Pin();
+        if($this->isVerified) {
+            $pin = new Pin();
 
 
-        $form=$this->createForm(PinType::class,$pin);
+            $form = $this->createForm(PinType::class, $pin);
 
-        $form->handleRequest($request);
-        if($this->isCsrfTokenValid("pin". $pin->getId(),$request->get("_token"))) {
-            if ($form->isSubmitted() && $form->isValid()) {
-                $pin->setUser($this->getUser());
-                $this->em->persist($pin);
-                $this->em->flush();
-                $this->addFlash("success","Pin Has Been Added");
-                return $this->redirectToRoute("admin_pins_index");
+            $form->handleRequest($request);
+            if ($this->isCsrfTokenValid("pin" . $pin->getId(), $request->get("_token"))) {
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $pin->setUser($this->getUser());
+                    $this->em->persist($pin);
+                    $this->em->flush();
+                    $this->addFlash("success", "Pin Has Been Added");
+                    return $this->redirectToRoute("admin_pins_index");
 
-            }else{
-                return $this->render("Admin/pin/new.html.twig",[
-                    "pin"=>$pin,
-                    "form"=>$form->createView(),
+                } else {
+                    return $this->render("Admin/pin/new.html.twig", [
+                        "pin" => $pin,
+                        "form" => $form->createView(),
 
-                ]);
+                    ]);
+                }
             }
+
+            return $this->render("Admin/pin/new.html.twig", [
+                "pin" => $pin,
+                "form" => $form->createView(),
+
+            ]);
         }
-
-        return $this->render("Admin/pin/new.html.twig",[
-            "pin"=>$pin,
-            "form"=>$form->createView(),
-
-        ]);
+        else
+        {
+            return $this->redirectToRoute("admin_pins_index");
+        }
     }
 
     /**
@@ -77,32 +96,36 @@ class ManagePinController extends AbstractController
      * @return Response
      */
     public function  edit(Request $request,Pin $pin){
+        if($this->isVerified) {
 
-        $form=$this->createForm(PinType::class,$pin,[
-            "method"=>"PUT"
-        ]);
+            $form = $this->createForm(PinType::class, $pin, [
+                "method" => "PUT"
+            ]);
 
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            if($this->isCsrfTokenValid("pin". $pin->getId(),$request->get("_token"))) {
-                $this->em->persist($pin);
-                $this->em->flush();
-                $this->addFlash("success","Pin Has Been updated");
-                return $this->redirectToRoute("admin_pins_index");
-            }else{
-                return $this->render("Admin/pin/edit.html.twig",[
-                    "form"=>$form->createView(),
-                    "pin"=>$pin
-                ]);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                if ($this->isCsrfTokenValid("pin" . $pin->getId(), $request->get("_token"))) {
+                    $this->em->persist($pin);
+                    $this->em->flush();
+                    $this->addFlash("success", "Pin Has Been updated");
+                    return $this->redirectToRoute("admin_pins_index");
+                } else {
+                    return $this->render("Admin/pin/edit.html.twig", [
+                        "form" => $form->createView(),
+                        "pin" => $pin
+                    ]);
+                }
+
+
             }
 
-
+            return $this->render("Admin/pin/edit.html.twig", [
+                "form" => $form->createView(),
+                "pin" => $pin
+            ]);
         }
-
-        return $this->render("Admin/pin/edit.html.twig",[
-            "form"=>$form->createView(),
-            "pin"=>$pin
-        ]);
+        else
+           return $this->redirectToRoute("admin_pins_index");
     }
 
     /**
@@ -111,17 +134,24 @@ class ManagePinController extends AbstractController
      * @param Pin $pin
      * @return Response
      */
-    public function  delete(Request $request,Pin $pin){
+    public function  delete(Request $request,Pin $pin)
+    {
 
+        if ($this->isVerified) {
 
-          if($this->isCsrfTokenValid("delete_pin". $pin->getId(),$request->get("_token"))){
-              $this->em->remove($pin);
-              $this->em->flush();
-              $this->addFlash("success","Pin Has Been Deleted");
-              return $this->redirectToRoute("admin_pins_index");
-          }
+            if ($this->isCsrfTokenValid("delete_pin" . $pin->getId(), $request->get("_token"))) {
+                $this->em->remove($pin);
+                $this->em->flush();
+                $this->addFlash("success", "Pin Has Been Deleted");
+                return $this->redirectToRoute("admin_pins_index");
+            }
             return $this->redirectToRoute("admin_pins_index");
 
 
+        }
+        else
+           return $this->redirectToRoute("admin_pins_index");
     }
+
+
 }
