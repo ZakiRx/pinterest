@@ -26,10 +26,11 @@
                 <input type="password" name="password" id="inputPassword" class="form-control mb-3" required>
 
 
-                <div class="checkbox mb-3">
+                <div class="checkbox mb-3 d-flex justify-content-between">
                     <label>
                         <input type="checkbox" name="_remember_me"> Remember me
                     </label>
+                      <a  href="{{ path('app_forgot_password_request') }}" class="text-primary"> Forgot Password ?</a>
                 </div>
 
                 <input type="hidden" name="_csrf_token"
