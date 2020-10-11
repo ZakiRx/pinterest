@@ -90,13 +90,25 @@ class ManagePinController extends AbstractController
     }
 
     /**
+     * @Route("/admin/pin/{id}",name="admin_show_pin",methods={"GET"})
+     * @param Pin $pin
+     * @param Request $request
+     * @return Response
+     */
+
+    public  function show(Pin $pin,Request $request){
+
+        return $this->render("Admin/pin/show.html.twig",compact("pin"));
+    }
+
+    /**
      * @Route("/admin/pin/{id}/edit",name="admin_edit_pin",methods={"GET","PUT"})
      * @param Request $request
      * @param Pin $pin
      * @return Response
      */
     public function  edit(Request $request,Pin $pin){
-        if($this->isVerified) {
+        if($this->isVerified && $pin->getUser() == $this->getUser()) {
 
             $form = $this->createForm(PinType::class, $pin, [
                 "method" => "PUT"
@@ -129,7 +141,7 @@ class ManagePinController extends AbstractController
     }
 
     /**
-     * @Route("/admin/pin/{id}/delete",name="admin_delete_pin",methods={"DELETE"})
+     * @Route("/admin/pin/{id}",name="admin_delete_pin",methods={"DELETE"})
      * @param Request $request
      * @param Pin $pin
      * @return Response
@@ -137,7 +149,7 @@ class ManagePinController extends AbstractController
     public function  delete(Request $request,Pin $pin)
     {
 
-        if ($this->isVerified) {
+        if ($this->isVerified && $pin->getUser() == $this->getUser()) {
 
             if ($this->isCsrfTokenValid("delete_pin" . $pin->getId(), $request->get("_token"))) {
                 $this->em->remove($pin);

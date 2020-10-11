@@ -90,6 +90,9 @@
     "jms/metadata": {
         "version": "2.3.0"
     },
+    "knplabs/knp-time-bundle": {
+        "version": "v1.13.0"
+    },
     "liip/imagine-bundle": {
         "version": "1.8",
         "recipe": {
