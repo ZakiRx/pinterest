@@ -1,0 +1,46 @@
+{% extends 'layout/partials/base.html.twig' %}
+
+{% block title 'List Pin' %}
+
+{% block body %}
+    <h2 class="text-center mb-3"> List Pins</h2>
+    {% if app.user and app.user.verified %}
+    <a href="{{ path('create_pin') }}" class="btn btn-primary mb-3">New Pin</a>
+    {% endif %}
+    {% include('layout/partials/_flashe_messages.html.twig') %}
+    <div class="row list-pins">
+
+        {% for pin in pins %}
+
+            <div class="col-md-4 mb-4">
+                <article class="rounded shadow ">
+                    <div class="pin-img overflow-hidden">
+                        <a href="{{ path('show_pin',{"id":pin.id}) }}">
+                            <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
+                            imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
+                        </a>
+                    </div>
+                    <div class="content p-3">
+                        <a href="{{ path('show_pin',{id:pin.id}) }}" class="text-muted h4 mb-3">{{ pin.title}}</a>
+                        <p>{{ pin.description}}</p>
+
+                        <div class="d-flex justify-content-between">
+                            <small>Created By <b>{{ pin.user.fullName }}</b> </small>
+
+                            <small>last Update : {{ pin.createdAt|ago}}</small>
+
+                        </div>
+
+                    </div>
+
+
+                </article>
+
+
+            </div>
+
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

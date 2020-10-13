@@ -4,43 +4,38 @@
 
 {% block body %}
     <h2 class="text-center mb-3"> List Pins</h2>
-    <a href="{{ path('admin_create_pin') }}" class="btn btn-primary mb-3">New Pin</a>
+    <a href="{{ path('create_pin') }}" class="btn btn-primary mb-3">New Pin</a>
 
     {% include('layout/partials/_flashe_messages.html.twig') %}
       <div class="row list-pins">
-
+          <table class="table table-bordered table-striped pins">
+              <tr>
+                  <th>Image</th>
+                  <th>Titre</th>
+                  <th>Description</th>
+                  <th>Crated At</th>
+                  <th>Action</th>
+              </tr>
+          <tbody>
           {% for pin in pins %}
-
-              <div class="col-md-4 mb-4">
-                  <article class="rounded shadow ">
-                      <div class="pin-img overflow-hidden">
-                          <a href="{{ path('admin_show_pin',{"id":pin.id}) }}">
-                              <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
-                              imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
-                          </a>
-                      </div>
-                      <div class="content p-3">
-                          <a href="{{ path('admin_show_pin',{id:pin.id}) }}" class="text-muted h4 mb-3">{{ pin.title}}</a>
-                          <p>{{ pin.description}}</p>
-
-                          <div class="d-flex justify-content-between">
-                              <small>Created By <b>{{ pin.user.fullName }}</b> </small>
-
-                              <small>last Update : {{ pin.createdAt|ago}}</small>
-
-                          </div>
-
-                      </div>
-
-
-                  </article>
-
-
-
-
-              </div>
+              <tr>
+                  <td><img src="{{ (pin.imageName? vich_uploader_asset(pin) : asset('images/pins/default.jpeg'))|imagine_filter("thumb_background") }}" alt="" class="img-pin"></td>
+                  <td>{{ pin.title }}</td>
+                  <td>{{ pin.description }}</td>
+                  <td>{{ pin.createdAt |ago }}</td>
+                  <td>
+                      <a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-warning">Edit</a>
+                      <form onsubmit="return confirm('Are you sure ?');" method="post" action="{{ path('delete_pin',{id:pin.id}) }}" class="d-inline">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <input type="hidden" name="_token" value="{{ csrf_token('delete_pin'~pin.id) }}">
+                          <input type="submit" class="border-0 btn btn-danger" value="Delete">
+                      </form>
+                  </td>
+              </tr>
 
           {% endfor %}
+          </tbody>
+          <table>
       </div>
 
 

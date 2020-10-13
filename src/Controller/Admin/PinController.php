@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-class ManagePinController extends AbstractController
+class PinController extends AbstractController
 {
 
     private $em;
@@ -36,19 +36,29 @@ class ManagePinController extends AbstractController
     }
 
     /**
-     * @Route("/admin/pin", name="admin_pins_index")
+     * @Route("/admin/pins", name="admin_pins_index")
      */
     public function index():Response
     {
-        $pins=$this->repository->findAll();
+        $pins=$this->repository->findBy([],['createdAt'=>'DESC']);
 
         return $this->render("Admin/pin/index.html.twig",[
             "pins"=>$pins
             ]);
     }
-
     /**
-     * @Route("/admin/pin/create",name="admin_create_pin",methods={"GET","POST"})
+     * @Route("/", name="pins_index")
+     */
+    public function pins():Response
+    {
+        $pins=$this->repository->findBy([],['createdAt'=>'DESC']);
+
+        return $this->render("pin/index.html.twig",[
+            "pins"=>$pins
+        ]);
+    }
+    /**
+     * @Route("/pin/create",name="create_pin",methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -69,7 +79,7 @@ class ManagePinController extends AbstractController
                     return $this->redirectToRoute("admin_pins_index");
 
                 } else {
-                    return $this->render("Admin/pin/new.html.twig", [
+                    return $this->render("pin/new.html.twig", [
                         "pin" => $pin,
                         "form" => $form->createView(),
 
@@ -90,7 +100,7 @@ class ManagePinController extends AbstractController
     }
 
     /**
-     * @Route("/admin/pin/{id}",name="admin_show_pin",methods={"GET"})
+     * @Route("/pin/{id}",name="show_pin",methods={"GET"})
      * @param Pin $pin
      * @param Request $request
      * @return Response
@@ -102,7 +112,7 @@ class ManagePinController extends AbstractController
     }
 
     /**
-     * @Route("/admin/pin/{id}/edit",name="admin_edit_pin",methods={"GET","PUT"})
+     * @Route("/pin/{id}/edit",name="edit_pin",methods={"GET","PUT"})
      * @param Request $request
      * @param Pin $pin
      * @return Response
@@ -141,7 +151,7 @@ class ManagePinController extends AbstractController
     }
 
     /**
-     * @Route("/admin/pin/{id}",name="admin_delete_pin",methods={"DELETE"})
+     * @Route("/pin/{id}",name="delete_pin",methods={"DELETE"})
      * @param Request $request
      * @param Pin $pin
      * @return Response
