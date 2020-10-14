@@ -13,6 +13,7 @@
                   <th>Image</th>
                   <th>Titre</th>
                   <th>Description</th>
+                  <th>User/Role</th>
                   <th>Crated At</th>
                   <th>Action</th>
               </tr>
@@ -22,6 +23,19 @@
                   <td><img src="{{ (pin.imageName? vich_uploader_asset(pin) : asset('images/pins/default.jpeg'))|imagine_filter("thumb_background") }}" alt="" class="img-pin"></td>
                   <td>{{ pin.title }}</td>
                   <td>{{ pin.description }}</td>
+                  <td>{{ pin.user.username }} |
+
+                          {% if  "ROLE_ADMIN"  in pin.user.roles %}
+                          <span class="badge badge-info mr-2">Admin</span>
+                         {% elseif  "ROLE_USER"  in pin.user.roles%}
+                             <span class="badge badge-warning mr-2">User</span>
+                         {% elseif  "ROLE_AUTHOR"  in pin.user.roles %}
+                             <span class="badge badge-primary">Author</span>
+                              {% else %}
+                                  <span class="badge badge-primary">ok</span>
+
+                          {% endif %}
+                   </td>
                   <td>{{ pin.createdAt |ago }}</td>
                   <td>
                       <a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-warning">Edit</a>

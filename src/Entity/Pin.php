@@ -73,6 +73,11 @@ class Pin
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $approved;
+
 
 
     public function getId(): ?int
@@ -186,6 +191,18 @@ class Pin
     public function setUser(?user $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getApproved(): ?bool
+    {
+        return $this->approved;
+    }
+
+    public function setApproved(bool $approved): self
+    {
+        $this->approved = $approved;
 
         return $this;
     }
