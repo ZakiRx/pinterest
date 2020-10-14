@@ -77,9 +77,10 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/verify/email", name="app_verify_email")
+     * @param Request $request
+     * @return Response
      */
     public function verifyUserEmail(Request $request): Response
     {
@@ -90,7 +91,6 @@ class RegistrationController extends AbstractController
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('danger', $exception->getReason());
-
             return $this->redirectToRoute('admin_pins_index');
         }
 

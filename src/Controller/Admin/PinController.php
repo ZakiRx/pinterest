@@ -66,17 +66,17 @@ class PinController extends AbstractController
         if($this->isVerified) {
             $pin = new Pin();
 
-
             $form = $this->createForm(PinType::class, $pin);
 
             $form->handleRequest($request);
             if ($this->isCsrfTokenValid("pin" . $pin->getId(), $request->get("_token"))) {
                 if ($form->isSubmitted() && $form->isValid()) {
                     $pin->setUser($this->getUser());
+                    $pin->setApproved(0);
                     $this->em->persist($pin);
                     $this->em->flush();
-                    $this->addFlash("success", "Pin Has Been Added");
-                    return $this->redirectToRoute("admin_pins_index");
+                    $this->addFlash("success", "Pin Has Been Added Waite Confirm Your Pin By Moderator ");
+                    return $this->redirectToRoute("pins_index");
 
                 } else {
                     return $this->render("pin/new.html.twig", [
