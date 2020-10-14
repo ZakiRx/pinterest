@@ -22,19 +22,19 @@ class PinRepository extends ServiceEntityRepository
     // /**
     //  * @return Pin[] Returns an array of Pin objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function approvedPins()
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
+            ->andWhere('p.approved = :val')
+            ->setParameter('val', true)
+            ->orderBy('p.createdAt', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Pin

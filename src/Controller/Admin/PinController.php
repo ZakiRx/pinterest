@@ -51,7 +51,7 @@ class PinController extends AbstractController
      */
     public function pins():Response
     {
-        $pins=$this->repository->findBy([],['createdAt'=>'DESC']);
+        $pins=$this->repository->approvedPins();
 
         return $this->render("pin/index.html.twig",[
             "pins"=>$pins
@@ -148,6 +148,20 @@ class PinController extends AbstractController
         }
         else
            return $this->redirectToRoute("admin_pins_index");
+    }
+    /**
+     * @Route("/pin/approved/{id}",name="approve_pin",methods={"POST"})
+     * @param Pin $pin
+     * @param Request $request
+     * @return Response
+     */
+
+    public  function approvedPin(Pin $pin,Request $request){
+        $pin->setApproved(1);
+        $this->em->persist($pin);
+        $this->em->flush();
+        $this->addFlash("success","Pin Has Benn Approved");
+        return $this->redirectToRoute("admin_pins_index");
     }
 
     /**

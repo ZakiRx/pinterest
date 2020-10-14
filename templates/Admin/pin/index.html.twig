@@ -15,6 +15,7 @@
                   <th>Description</th>
                   <th>User/Role</th>
                   <th>Crated At</th>
+                  <th>Approved</th>
                   <th>Action</th>
               </tr>
           <tbody>
@@ -37,6 +38,16 @@
                           {% endif %}
                    </td>
                   <td>{{ pin.createdAt |ago }}</td>
+                  <td>
+                      {% if   pin.approved == 1 %}
+                      <span class="badge badge-success">Approved</span>
+                      {% else %}
+                          <span class="badge badge-danger">Not yet</span>
+                          <form method="post" action="{{ path('approve_pin',{id:pin.id}) }}" class="d-inline">
+                              <input type="submit" class="badge badge-dark py-1 px-2 d-inline" value="Approved Pin">
+                          </form>
+                      {% endif %}
+                  </td>
                   <td>
                       <a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-warning">Edit</a>
                       <form onsubmit="return confirm('Are you sure ?');" method="post" action="{{ path('delete_pin',{id:pin.id}) }}" class="d-inline">
