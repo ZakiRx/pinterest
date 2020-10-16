@@ -1,0 +1,60 @@
+{% extends 'layout/partials/base.html.twig' %}
+
+{% block title 'List User' %}
+
+{% block body %}
+    <h2 class="text-center mb-3"> List User</h2>
+
+    {% include('layout/partials/_flashe_messages.html.twig') %}
+    <div class="row list-user">
+        <table class="table table-bordered table-striped users">
+            <tr>
+                <th>Image</th>
+                <th>userName</th>
+                <th>FullName</th>
+                <th>Role</th>
+                <th>Active Account ?</th>
+                <th>Action</th>
+            </tr>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>#</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.fullName }} </td>
+                    <td>
+
+                        {% if  "ROLE_ADMIN"  in user.roles %}
+                            <span class="badge badge-info mr-2">Admin</span>
+                        {% elseif  "ROLE_USER"  in user.roles%}
+                            <span class="badge badge-warning mr-2">User</span>
+                        {% elseif  "ROLE_AUTHOR"  in user.roles %}
+                            <span class="badge badge-primary">Author</span>
+
+                        {% endif %}
+                    </td>
+                    <td>
+                        {%  if user.isVerified == 1 %}
+                        <span class="badge badge-success mr-2">Active</span>
+                        {% else %}
+                            <span class="badge badge-danger mr-2">Not Active</span>
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+                        <form onsubmit="return confirm('Are you sure ?');" method="post" action="{{ path('delete_user',{id:user.id}) }}" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete_user'~user.id) }}">
+                            <input type="submit" class="border-0 btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            </table>
+    </div>
+
+
+{% endblock %}

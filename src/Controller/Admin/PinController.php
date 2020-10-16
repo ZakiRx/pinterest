@@ -72,10 +72,14 @@ class PinController extends AbstractController
             if ($this->isCsrfTokenValid("pin" . $pin->getId(), $request->get("_token"))) {
                 if ($form->isSubmitted() && $form->isValid()) {
                     $pin->setUser($this->getUser());
+                    if(in_array("ROLE_ADMIN" , $this->getUser()->getRoles())){
+                        $pin->setApproved(1);
+
+                    }else
                     $pin->setApproved(0);
                     $this->em->persist($pin);
                     $this->em->flush();
-                    $this->addFlash("success", "Pin Has Been Added Waite Confirm Your Pin By Moderator ");
+                    $this->addFlash("success", "Pin Has Been Added Wait Confirm Your Pin By Moderator ");
                     return $this->redirectToRoute("pins_index");
 
                 } else {
@@ -95,7 +99,7 @@ class PinController extends AbstractController
         }
         else
         {
-            return $this->redirectToRoute("admin_pins_index");
+            return $this->redirectToRoute("pins_index");
         }
     }
 
@@ -108,7 +112,7 @@ class PinController extends AbstractController
 
     public  function show(Pin $pin,Request $request){
 
-        return $this->render("Admin/pin/show.html.twig",compact("pin"));
+        return $pin->getApproved() ? $this->render("Admin/pin/show.html.twig",compact("pin")) : $this->redirectToRoute("pins_index");
     }
 
     /**
@@ -147,7 +151,7 @@ class PinController extends AbstractController
             ]);
         }
         else
-           return $this->redirectToRoute("admin_pins_index");
+           return $this->redirectToRoute("pins_index");
     }
     /**
      * @Route("/pin/approved/{id}",name="approve_pin",methods={"POST"})
@@ -179,14 +183,14 @@ class PinController extends AbstractController
                 $this->em->remove($pin);
                 $this->em->flush();
                 $this->addFlash("success", "Pin Has Been Deleted");
-                return $this->redirectToRoute("admin_pins_index");
+                return $this->redirectToRoute("pins_index");
             }
-            return $this->redirectToRoute("admin_pins_index");
+            return $this->redirectToRoute("pins_index");
 
 
         }
         else
-           return $this->redirectToRoute("admin_pins_index");
+           return $this->redirectToRoute("pins_index");
     }
 
 
