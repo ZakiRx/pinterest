@@ -1,0 +1,23 @@
+#dashboard{
+ height: 93vh;
+ background: #eeeff4;
+}
+
+#dashboard .nav-left{
+ height: 93vh;
+ background: #242d41;
+ color: #ccc;
+ h3{
+  text-transform: uppercase;
+  font-size: 16px;
+  margin-top: 12px;
+  color: #7889a4;
+ }
+
+ li {
+   .nav-link{
+    color: #dde9f8;
+    font-size: 14px;
+   }
+ }
+}

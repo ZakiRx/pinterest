@@ -8,14 +8,15 @@
     {% include('layout/partials/_flashe_messages.html.twig') %}
     <div class="row list-user">
         <table class="table table-bordered table-striped users">
-            <tr>
+
+            <thead>
                 <th>Image</th>
                 <th>userName</th>
                 <th>FullName</th>
                 <th>Role</th>
                 <th>Active Account ?</th>
                 <th>Action</th>
-            </tr>
+            </thead>
             <tbody>
             {% for user in users %}
                 <tr>
@@ -49,6 +50,7 @@
                             <input type="submit" class="border-0 btn btn-danger" value="Delete">
                         </form>
                     </td>
+
                 </tr>
 
             {% endfor %}

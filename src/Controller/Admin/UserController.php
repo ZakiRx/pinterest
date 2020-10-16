@@ -22,12 +22,20 @@ class UserController extends  AbstractController
         $this->userRepository=$userRepository;
         $this->em=$em;
     }
+    /**
+     * @Route("/admin",name="admin_dashboard")
+     * @return Response
+     */
+    public  function index(){
+
+        return $this->render("Admin/dashboard.html.twig");
+    }
 
     /**
      * @Route("/admin/users",name="admin_users")
      * @return Response
      */
-    public  function index(){
+    public  function users(){
         $users=$this->userRepository->findAll();
         return $this->render("Admin/user/index.html.twig",compact("users"));
     }
