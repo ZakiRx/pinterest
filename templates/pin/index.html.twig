@@ -3,6 +3,7 @@
 {% block title 'List Pin' %}
 
 {% block body %}
+
     <h2 class="text-center mb-3"> List Pins</h2>
     {% if app.user and app.user.verified %}
     <a href="{{ path('create_pin') }}" class="btn btn-primary mb-3">New Pin</a>

@@ -10,9 +10,17 @@
     <body>
 
     {% include('layout/partials/_nav.html.twig') %}
+     <div class="container-fluid" id="dashboard">
+         {% block bodydashboard %}{% endblock %}
+     </div>
+       <div class="container">
+                {% block body %}{% endblock %}
+       </div>
 
 
-        {% block body %}{% endblock %}
+
+
+
 
 
     {% include('layout/partials/_footer.html.twig') %}

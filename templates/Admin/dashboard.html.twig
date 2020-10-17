@@ -1,30 +1,32 @@
-{% extends "layout/partials/base.html.twig" %}
+{% extends 'layout/partials/base.html.twig' %}
+
 
 {% block title 'Dashboard | Pinterest' %}
-{% block body %}
-    <main id="dashboard" class="container-fluid">
+
+{% block bodydashboard %}
         <div class="row">
             <div class="col-md-2 nav-left">
-                <div class="header py-4 text-center">
-                    <img src="#" alt="Logo Pinterest">
+                <div class="header py-4 text-center ">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo Pinterest" class="w-50">
                 </div>
+                <hr>
                 <div class="navigation">
 
                   <ul  class="list-unstyled">
                       <li class="nav-item">
-                        <a href="{{ path('admin_dashboard') }}" class="nav-link">Dashboard</a>
+                         <a href="{{ path('admin_dashboard') }}" class="nav-link"> <i class="fas fa-tachometer-alt mr-2"></i>  Dashboard</a>
                       </li>
                       <h3>Pins</h3>
                       <li class="nav-item">
-                          <a href="{{ path('admin_pins_index') }}" class="nav-link">List Pins</a>
+                           <a href="{{ path('admin_pins_index') }}" class="nav-link"> <i class="far fa-images mr-2"></i> List Pins</a>
 
                       </li>
                       <li class="nav-item">
-                          <a href="{{ path('create_pin') }}" class="nav-link">Add New Pin</a>
+                          <a href="{{ path('create_pin') }}" class="nav-link"><i class="fas fa-plus mr-2"></i> Add New Pin</a>
                       </li>
                       <h3>User</h3>
                       <li class="nav-item">
-                          <a href="#" class="nav-link">List User</a>
+                          <a href="#" class="nav-link"> <i class="fas fa-users mr-2"></i>  List User</a>
                       </li>
 
                   </ul>
@@ -32,5 +34,4 @@
             </div>
             <div class="col-md-9"></div>
         </div>
-    </main>
 {% endblock%}
