@@ -1,0 +1,143 @@
+{% extends 'layout/partials/_user_dashboard.html.twig' %}
+
+{% block title 'Profile' %}
+
+{% block body %}
+    <div class="profile">
+        <div class="row">
+            <div class="col-lg-3 shadow-sm user-info">
+                <div class="head text-center pt-4">
+                    <img src="{{ asset('images/pins/default.jpeg') }}" class="rounded-circle" alt="image Profile">
+                    <h4 class="mt-3 font-weight-bold" style="color: #878787">
+                        {{ user.username }}
+                    </h4>
+                </div>
+                <hr>
+                <ul  class="list-unstyled px-4 py-3">
+                    <li class="nav-item mb-3">
+                        <span >Full name</span>
+                        <p>Zakaria Guemi</p>
+                    </li>
+                    <li class="nav-item mb-3">
+                        <span >Email</span>
+                        <p>zakariaguemi18@gmail.com</p>
+
+                    </li>
+                    <li class="nav-item mb-3">
+                        <span>Phone number</span>
+                        <p>+212 648-314741</p>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <div class="statistic shadow-sm p-4 text-center">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">10</p>
+                                        <p> number <b>Pins</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p> number <b>Comments</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p>Pin <b class="text-success">Approved</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p>...</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 mb-3">
+
+                        <div class="statistic shadow-sm p-4 text-center">
+                            <h5 class="mb-3 text-left">Last 4 Pins</h5>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">10</p>
+                                        <p> number <b>Pins</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p> number <b>Comments</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p>Pin <b class="text-success">Approved</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p>...</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 mb-3">
+
+                        <div class="statistic shadow-sm p-4 text-center">
+                            <h5 class="mb-3 text-left">Last 4 Comments</h5>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">10</p>
+                                        <p> number <b>Pins</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p> number <b>Comments</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p>Pin <b class="text-success">Approved</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <p class="h3">5</p>
+                                        <p>...</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}

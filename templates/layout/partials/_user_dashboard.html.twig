@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Pinterest!{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body id="user-dashboard">
+{% include('layout/partials/_nav.html.twig') %}
+
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 nav-left shadow-sm pt-4">
+
+            <div class="navigation">
+
+                <ul  class="list-unstyled">
+                    <li class="nav-item mb-2">
+                        <a href="{{ path('admin_dashboard') }}" class="nav-link"> <i class="fas fa-tachometer-alt mr-2"></i>  Dashboard</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="{{ path('admin_pins_index') }}" class="nav-link"> <i class="far fa-images mr-2"></i> List Pins</a>
+
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="{{ path('create_pin') }}" class="nav-link"><i class="fas fa-plus mr-2"></i> Add New Pin</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="{{ path('admin_users') }}" class="nav-link"> <i class="fas fa-users mr-2"></i>  List User</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10 px-5">
+            {% include('layout/partials/_flashe_messages.html.twig') %}
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+</main>
+
+{% include('layout/partials/_footer.html.twig') %}
+
+</body>
+</html>

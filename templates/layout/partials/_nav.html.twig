@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-2">
     <div class="container">
         <a class="navbar-brand" href="{{ path('admin_pins_index') }}">Panterest</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@
                     </li>
 
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('pins_index') }}"> Pins <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ path('pins_index') }}"> Pins </a>
                 </li>
                     {% if   app.user.verified%}
                         <li class="nav-item">
@@ -30,7 +30,7 @@
                     {% endif %}
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Account</a>
+                    <a class="nav-link" href="{{ path('profile_user') }}">Account</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Log out</a>

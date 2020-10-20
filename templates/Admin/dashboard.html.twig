@@ -1,15 +1,18 @@
-{% extends 'layout/partials/base.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Pinterest!{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body id="dashboard">
+{% include('layout/partials/_nav.html.twig') %}
 
-
-{% block title 'Dashboard | Pinterest' %}
-
-{% block bodydashboard %}
+    <main class="container-fluid">
         <div class="row">
             <div class="col-md-2 nav-left">
-                <div class="header py-4 text-center ">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo Pinterest" class="w-50">
-                </div>
-                <hr>
                 <div class="navigation">
 
                   <ul  class="list-unstyled">
@@ -18,20 +21,28 @@
                       </li>
                       <h3>Pins</h3>
                       <li class="nav-item">
-                           <a href="{{ path('admin_pins_index') }}" class="nav-link"> <i class="far fa-images mr-2"></i> List Pins</a>
+                           <a href="{{ path('admin_pins_index') }}" class="nav-link"> <i class="far fa-images mr-2"></i> My Pins</a>
 
                       </li>
                       <li class="nav-item">
-                          <a href="{{ path('create_pin') }}" class="nav-link"><i class="fas fa-plus mr-2"></i> Add New Pin</a>
+                          <a href="{{ path('create_pin') }}" class="nav-link"><i class="fas fa-plus mr-2"></i> My Comments</a>
                       </li>
                       <h3>User</h3>
                       <li class="nav-item">
-                          <a href="#" class="nav-link"> <i class="fas fa-users mr-2"></i>  List User</a>
+                          <a href="{{ path('admin_users') }}" class="nav-link"> <i class="fas fa-users mr-2"></i> Setting </a>
                       </li>
 
                   </ul>
                 </div>
             </div>
-            <div class="col-md-9"></div>
+            <div class="col-md-10 px-5">
+                {% include('layout/partials/_flashe_messages.html.twig') %}
+                {% block body %}{% endblock %}
+            </div>
         </div>
-{% endblock%}
+    </main>
+
+{% include('layout/partials/_footer.html.twig') %}
+
+</body>
+</html>
