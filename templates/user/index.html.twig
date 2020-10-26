@@ -38,19 +38,25 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div>
-                                        <p class="h3">10</p>
+                                        <p class="h3">{{ app.user.pins.count }}</p>
                                         <p> number <b>Pins</b></p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div>
-                                        <p class="h3">5</p>
+                                        <p class="h3">50</p>
                                         <p> number <b>Comments</b></p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div>
-                                        <p class="h3">5</p>
+                                        {% set i=0 %}
+                                        {% for pin in app.user.pins  %}
+                                            {% if pin.getApproved %}
+                                                {% set i=i+1%}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <p class="h3">{{ i }}</p>
                                         <p>Pin <b class="text-success">Approved</b></p>
                                     </div>
                                 </div>
@@ -70,30 +76,16 @@
                         <div class="statistic shadow-sm p-4 text-center">
                             <h5 class="mb-3 text-left">Last 4 Pins</h5>
                             <div class="row">
-                                <div class="col-lg-3">
-                                    <div>
-                                        <p class="h3">10</p>
-                                        <p> number <b>Pins</b></p>
+                                {% for pin in app.user.pins[:4]  %}
+                                    <div class="col-lg-3 mb-3">
+                                        <div>
+                                            <a href="{{ path('show_pin',{id:pin.id}) }}">
+                                              <img src="{{ (pin.imageName? vich_uploader_asset(pin) : asset('images/pins/default.jpeg'))|imagine_filter("thumb_small") }}" class="rounded-circle" alt="">
+                                            </a>
+                                        </div>
+
                                     </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div>
-                                        <p class="h3">5</p>
-                                        <p> number <b>Comments</b></p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div>
-                                        <p class="h3">5</p>
-                                        <p>Pin <b class="text-success">Approved</b></p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div>
-                                        <p class="h3">5</p>
-                                        <p>...</p>
-                                    </div>
-                                </div>
+                                {% endfor %}
 
                             </div>
                         </div>

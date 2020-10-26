@@ -91,7 +91,7 @@ class PinController extends AbstractController
                 }
             }
 
-            return $this->render("Admin/pin/new.html.twig", [
+            return $this->render("pin/new.html.twig", [
                 "pin" => $pin,
                 "form" => $form->createView(),
 
@@ -112,7 +112,7 @@ class PinController extends AbstractController
 
     public  function show(Pin $pin,Request $request){
 
-        return $pin->getApproved() ? $this->render("Admin/pin/show.html.twig",compact("pin")) : $this->redirectToRoute("pins_index");
+        return $pin->getApproved() ? $this->render("pin/show.html.twig",compact("pin")) : $this->redirectToRoute("pins_index");
     }
 
     /**
@@ -136,7 +136,7 @@ class PinController extends AbstractController
                     $this->addFlash("success", "Pin Has Been updated");
                     return $this->redirectToRoute("admin_pins_index");
                 } else {
-                    return $this->render("Admin/pin/edit.html.twig", [
+                    return $this->render("pin/edit.html.twig", [
                         "form" => $form->createView(),
                         "pin" => $pin
                     ]);
@@ -145,7 +145,7 @@ class PinController extends AbstractController
 
             }
 
-            return $this->render("Admin/pin/edit.html.twig", [
+            return $this->render("pin/edit.html.twig", [
                 "form" => $form->createView(),
                 "pin" => $pin
             ]);
