@@ -96,30 +96,15 @@
                         <div class="statistic shadow-sm p-4 text-center">
                             <h5 class="mb-3 text-left">Last 4 Comments</h5>
                             <div class="row">
+                                {% for comment in app.user.comments %}
                                 <div class="col-lg-6">
                                     <div class="comment">
                                         <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle" alt="">
-                                        <p class="content" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi odit officiis omnis quam tempora, voluptatem voluptatum! Natus nisi numquam omnis pariatur quas quasi repellendus sapiente sint sunt vel, veniam voluptates?</p>
+                                        <p class="content" >{{ comment.getComment}}</p>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="comment">
-                                        <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle" alt="">
-                                        <p class="content" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi odit officiis omnis quam tempora, voluptatem voluptatum! Natus nisi numquam omnis pariatur quas quasi repellendus sapiente sint sunt vel, veniam voluptates?</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="comment">
-                                        <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle" alt="">
-                                        <p class="content" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi odit officiis omnis quam tempora, voluptatem voluptatum! Natus nisi numquam omnis pariatur quas quasi repellendus sapiente sint sunt vel, veniam voluptates?</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="comment">
-                                        <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle" alt="">
-                                        <p class="content" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi odit officiis omnis quam tempora, voluptatem voluptatum! Natus nisi numquam omnis pariatur quas quasi repellendus sapiente sint sunt vel, veniam voluptates?</p>
-                                    </div>
-                                </div>
+
+                                {% endfor %}
 
 
                             </div>

@@ -38,6 +38,12 @@ class Comment
      */
     private $userid;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Pin::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $pinid;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +93,18 @@ class Comment
     public function setUserid(?User $userid): self
     {
         $this->userid = $userid;
+
+        return $this;
+    }
+
+    public function getPinid(): ?Pin
+    {
+        return $this->pinid;
+    }
+
+    public function setPinid(?Pin $pinid): self
+    {
+        $this->pinid = $pinid;
 
         return $this;
     }
