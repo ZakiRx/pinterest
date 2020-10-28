@@ -72,6 +72,20 @@
      display: inline-block;
    }
   }
+  .comment{
+   display: flex;
+   img{
+    width: 44px;
+    height: 44px;
+   }
+   .content{
+    text-align: justify;
+    margin-left: 6px;
+    background-color: whitesmoke;
+    padding: 5px 15px;
+    border-radius: 8px;
+   }
+  }
  }
 }
 
