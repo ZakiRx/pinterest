@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Comment;
 use App\Entity\Pin;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,9 +16,11 @@ use Knp\Bundle\TimeBundle\DateTimeFormatter;
 class CommentController extends AbstractController
 {
     private $em;
-    public  function  __construct(EntityManagerInterface $em)
+    private $repository;
+    public  function  __construct(EntityManagerInterface $em,CommentRepository $repository)
     {
         $this->em=$em;
+        $this->repository=$repository;
     }
 
     /**
@@ -58,6 +61,22 @@ class CommentController extends AbstractController
             ],403);
         }
 
+    }
+    /**
+     * @Route("/pin/{id}/comment/delete",name="pin_delete_comment")
+     * @param Pin $pin
+     * @param Request $request
+     * @param DateTimeFormatter|null $dateTimeFormatter
+     * @return JsonResponse
+     */
+    public  function delete(Pin $pin,Request $request,?DateTimeFormatter $dateTimeFormatter): JsonResponse
+    {
+        $comment=$this->repository->findOneBy(['pinid'=>$pin,
+            'userid'=>$this->getUser()]);
+        if($comment){
+            $this->em->remove($comment);
+            $this->em->flush();
+        }
     }
 
 

@@ -22,7 +22,6 @@ $(".custom-file-input").on("change",function (e) {
     $(inputFile).parent().find(".custom-file-label").text(inputFile.files[0].name)
 });
 
-
 const axios = require('axios');
 $('#addComment').bind('submit',function(e) {
     e.preventDefault();
