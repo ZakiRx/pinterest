@@ -42,42 +42,39 @@
          <div class="col-md-6">
              <div class="comments">
                  <h4>Comments</h4>
-                 {% for comment in pin.comments %}
-                     <div class="col-lg-12">
-                         <div class="comment ">
-                             <div class="d-flex">
-                                 <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle mr-1" alt="" width="42px" height="42px">
-                                 <p class="content" >{{ comment.getComment}}</p>
+                 <div class="list-comment">
+                     {% for comment in pin.comments %}
+                         <div class="col-lg-12">
+                             <div class="comment">
+                                 <div class="d-flex">
+                                     <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle mr-1" alt="" width="42px" height="42px">
+                                     <p class="content" >{{ comment.getComment}}</p>
+                                 </div>
+                                 <small class="date-comment">{{ comment.createdAt|ago}}</small>
                              </div>
 
-                             <small class="date-comment">{{ comment.createdAt|ago}}</small>
                          </div>
 
-                     </div>
+                     {% endfor %}
+                 </div>
 
-                 {% endfor %}
                  <div class="col-lg-12">
                      <div class="comment ">
                          <div class="d-flex">
                              <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle mr-1" alt="" width="42px" height="42px">
-                             <p class="content" >aaa</p>
+
+                             <form id="addComment">
+                                 <textarea name="comment" class="input-comment" placeholder="Add your Comment..."></textarea>
+                                 <input type="hidden" id="url" value="{{ path('pin_add_comment',{id:pin.id}) }}">
+                                 <button type="submit" class="btn btn-secondary">Comment</button>
+                             </form>
+
                          </div>
 
-                         <small class="date-comment">{aaa</small>
                      </div>
 
                  </div>
-                 <div class="col-lg-12">
-                     <div class="comment ">
-                         <div class="d-flex">
-                             <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle mr-1" alt="" width="42px" height="42px">
-                             <p class="content" >{fdfddfdfdf</p>
-                         </div>
 
-                         <small class="date-comment">{xxxxxx</small>
-                     </div>
-
-                 </div>
 
              </div>
          </div>
