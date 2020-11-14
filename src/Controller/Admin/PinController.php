@@ -46,6 +46,19 @@ class PinController extends AbstractController
             "pins"=>$pins
             ]);
     }
+    /*Pins Each User*/
+    /**
+     * @Route("/user/profile/pins", name="user_pins")
+     */
+    public function PinsUSer():Response
+    {
+        $pins=$this->repository->findBy(['user'=>$this->getUser()],['createdAt'=>'DESC']);
+
+        return $this->render("user/pins.html.twig",[
+            "pins"=>$pins
+        ]);
+    }
+
     /**
      * @Route("/", name="pins_index")
      */
