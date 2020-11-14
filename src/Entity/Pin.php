@@ -36,7 +36,7 @@ class Pin
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
-     * @Assert\Length(min="3",max="20")
+     * @Assert\Length(min="3",max="500")
 
      */
     private $description;

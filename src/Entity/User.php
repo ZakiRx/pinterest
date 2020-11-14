@@ -62,6 +62,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Pin::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $pins;
 
@@ -77,6 +78,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="userid", orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $comments;
 
@@ -268,6 +270,7 @@ class User implements UserInterface
      */
     public function getComments(): Collection
     {
+
         return $this->comments;
     }
 

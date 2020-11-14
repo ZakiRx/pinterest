@@ -16,11 +16,11 @@
                 <ul  class="list-unstyled px-4 py-3">
                     <li class="nav-item mb-3">
                         <span >Full name</span>
-                        <p>Zakaria Guemi</p>
+                        <p>{{ user.fullName }}</p>
                     </li>
                     <li class="nav-item mb-3">
                         <span >Email</span>
-                        <p>zakariaguemi18@gmail.com</p>
+                        <p>{{user.email}}</p>
 
                     </li>
                     <li class="nav-item mb-3">
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div>
-                                        <p class="h3">50</p>
+                                        <p class="h3">{{ app.user.comments|length }}</p>
                                         <p> number <b>Comments</b></p>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                         <div class="statistic shadow-sm p-4 text-center">
                             <h5 class="mb-3 text-left">Last 4 Comments</h5>
                             <div class="row">
-                                {% for comment in app.user.comments %}
+                                {% for comment in app.user.comments[:4] %}
                                 <div class="col-lg-6">
                                     <div class="comment">
                                         <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle" alt="">
