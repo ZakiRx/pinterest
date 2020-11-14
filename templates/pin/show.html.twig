@@ -52,7 +52,11 @@
                              <div class="comment">
                                  <div class="d-flex">
                                      <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle mr-1" alt="" width="42px" height="42px">
-                                     <p class="content" >{{ comment.getComment}}</p>
+                                     <p class="content" >
+                                         <span class="font-weight-bold">{{ comment.userid.username }}</span>
+                                         <br>
+                                         {{ comment.getComment}}
+                                     </p>
                                  </div>
                                  <small class="date-comment">{{ comment.createdAt|ago}}</small>
                              </div>

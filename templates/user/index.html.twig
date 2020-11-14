@@ -80,7 +80,12 @@
                                     <div class="col-lg-3 mb-3">
                                         <div>
                                             <a href="{{ path('show_pin',{id:pin.id}) }}">
-                                              <img src="{{ (pin.imageName? vich_uploader_asset(pin) : asset('images/pins/default.jpeg'))|imagine_filter("thumb_small") }}" class="rounded-circle" alt="">
+                                                {% if( 'https' in pin.imageName ) %}
+                                                    <img src="{{ pin.imageName }}" height="200px" width="200" class="rounded-circle" alt="image Not Found">
+                                                {% else %}
+                                                    <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
+                                                    imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
+                                                {% endif %}
                                             </a>
                                         </div>
 
