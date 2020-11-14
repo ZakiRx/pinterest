@@ -17,13 +17,17 @@
                 <article class="rounded shadow ">
                     <div class="pin-img overflow-hidden">
                         <a href="{{ path('show_pin',{"id":pin.id}) }}">
-                            <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
-                            imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
+                            {% if( 'https' in pin.imageName ) %}
+                            <img src="{{ pin.imageName }}" height="300px" width="100%" alt="image Not Found">
+                            {% else %}
+                                <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
+                                imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
+                            {% endif %}
                         </a>
                     </div>
                     <div class="content p-3">
                         <a href="{{ path('show_pin',{id:pin.id}) }}" class="text-muted h4 mb-3">{{ pin.title}}</a>
-                        <p>{{ pin.description}}</p>
+                        <p class="text-justify">{{ pin.description |  slice(0,150)}}...</p>
 
                         <div class="d-flex justify-content-between">
                             <small>Created By <b>{{ pin.user.fullName }}</b> </small>

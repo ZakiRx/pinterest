@@ -75,8 +75,10 @@ class PinController extends AbstractController
                     if(in_array("ROLE_ADMIN" , $this->getUser()->getRoles())){
                         $pin->setApproved(1);
 
-                    }else
+                    }
+                    else
                     $pin->setApproved(0);
+
                     $this->em->persist($pin);
                     $this->em->flush();
                     $this->addFlash("success", "Pin Has Been Added Wait Confirm Your Pin By Moderator ");

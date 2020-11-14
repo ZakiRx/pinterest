@@ -8,9 +8,13 @@
          <div class="col-md-6  mb-4">
              <article class="rounded  ">
                  <div class="pin-img overflow-hidden">
+                     {% if( 'https' in pin.imageName ) %}
+                         <img src="{{ pin.imageName }}" width="100%">
+                     {% else %}
+                         <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
+                         imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
+                     {% endif %}
 
-                     <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
-                     imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
 
                  </div>
                  <div class="content p-3">
@@ -24,7 +28,7 @@
                      </div>
 
                  </div>
-                 {% if app.user.id == pin.user.id %}
+                 {% if app.user is not null and app.user.id == pin.user.id %}
 
                      <div class="actions py-2 px-3">
                          <a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-light">Edit</a>
@@ -41,7 +45,7 @@
          </div>
          <div class="col-md-6">
              <div class="comments">
-                 <h4>Comments</h4>
+                 <h4 class="mb-4 h5">Comments</h4>
                  <div class="list-comment">
                      {% for comment in pin.comments %}
                          <div class="col-lg-12">
@@ -57,7 +61,7 @@
 
                      {% endfor %}
                  </div>
-
+                 {% if app.user %}
                  <div class="col-lg-12">
                      <div class="comment ">
                          <div class="d-flex">
@@ -74,6 +78,7 @@
                      </div>
 
                  </div>
+                 {% endif %}
 
 
              </div>
