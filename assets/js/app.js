@@ -28,10 +28,31 @@ $('#addComment').bind('submit',function(e) {
     let comment = $(".input-comment").val();
     const url=$("#url").val();
     axios.post(url,{'comment' : comment}).then(function (response){
-        if(response.status=="200"){
+        if(response.status===200){
             $(".list-comment").append('<div class="comment"><div class="d-flex"><img src="/images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg" class="rounded-circle mr-1" alt="" width="42px" height="42px"> <p class="content" >'+comment+'</p>  </div>   <small class="date-comment">'+response.data.createdAt +'</small> </div>');
             $(".input-comment").val("")
         }
 
     });
 });
+//Collection type
+
+
+$(".btn-sub").click(function (){
+
+    let prototype=$("#form-subCat").data("prototype");
+    let index=$(".current-index").val();
+    prototype=prototype.replace(/__name__/g,index);
+    $(".current-index").val(++index);
+    let content = document.createElement("div");
+    content.innerHTML=prototype;
+    let FormwithDeleteButton = content.querySelector(".form-group");
+    let deleteButton= document.createElement("button");
+    deleteButton.innerHTML="<i class='far fa-trash-alt'></i>";
+    deleteButton.className="btn btn-danger btn-delete";
+    FormwithDeleteButton.append(deleteButton);
+    $(".list-subCat").append(FormwithDeleteButton);
+});
+$("html").on("click",".btn-danger",function (){
+    $(this).parent("fieldset").remove();
+})

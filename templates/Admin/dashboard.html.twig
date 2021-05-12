@@ -42,7 +42,12 @@
         </div>
     </main>
 
-{% include('layout/partials/_footer.html.twig') %}
 
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    <script src="https://kit.fontawesome.com/b3f46432bc.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% include('layout/partials/_footer.html.twig') %}
 </body>
 </html>

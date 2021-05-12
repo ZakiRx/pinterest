@@ -21,15 +21,12 @@ body {
     form {
         text-align: center;
         a{
-
             img{
                 @extend .w-25;
                 @extend .img-thumbnail;
 
             }
         }
-
-
     }
 }
 

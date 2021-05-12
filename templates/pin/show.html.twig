@@ -24,7 +24,7 @@
                      </div>
 
                  </div>
-                 {% if app.user.id == pin.user.id %}
+                 {% if  app.user is not null and app.user.id == pin.user.id %}
 
                      <div class="actions py-2 px-3">
                          <a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-light">Edit</a>
@@ -57,7 +57,7 @@
 
                      {% endfor %}
                  </div>
-
+                 {% if app.user is not null %}
                  <div class="col-lg-12">
                      <div class="comment ">
                          <div class="d-flex">
@@ -74,6 +74,7 @@
                      </div>
 
                  </div>
+                 {% endif %}
 
 
              </div>

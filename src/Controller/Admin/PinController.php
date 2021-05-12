@@ -62,7 +62,7 @@ class PinController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function  new(Request $request,UserRepository $userRepository):Response{
+    public function  new(Request $request):Response{
         if($this->isVerified) {
             $pin = new Pin();
 
@@ -72,14 +72,17 @@ class PinController extends AbstractController
             if ($this->isCsrfTokenValid("pin" . $pin->getId(), $request->get("_token"))) {
                 if ($form->isSubmitted() && $form->isValid()) {
                     $pin->setUser($this->getUser());
+                    $message="";
                     if(in_array("ROLE_ADMIN" , $this->getUser()->getRoles())){
                         $pin->setApproved(1);
-
-                    }else
-                    $pin->setApproved(0);
+                        $message="Pin Has Been Added";
+                    }else{
+                        $pin->setApproved(0);
+                        $message="Pin Has Been Added Wait Confirm Your Pin By Moderator";
+                    }
                     $this->em->persist($pin);
                     $this->em->flush();
-                    $this->addFlash("success", "Pin Has Been Added Wait Confirm Your Pin By Moderator ");
+                    $this->addFlash("success", $message);
                     return $this->redirectToRoute("pins_index");
 
                 } else {
@@ -94,7 +97,6 @@ class PinController extends AbstractController
             return $this->render("pin/new.html.twig", [
                 "pin" => $pin,
                 "form" => $form->createView(),
-
             ]);
         }
         else

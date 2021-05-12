@@ -1,0 +1,24 @@
+{% extends "Admin/dashboard.html.twig" %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_start(form) }}
+            {{ form_row(form.name) }}
+
+            <div id="form-subCat"
+                 data-prototype="{{ form_row(form.SubCategories.vars.prototype)|e('html_attr') }}">
+                <div class="list-subCat">
+                    {{ form_row(form.SubCategories) }}
+
+                </div>
+            </div>
+            <input type="hidden" class="current-index" value="1">
+
+            <span class="btn btn-warning btn-sub">new SubCategory</span>
+            <button class="btn btn-primary" type="submit">Add</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
