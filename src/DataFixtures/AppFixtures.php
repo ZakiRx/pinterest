@@ -53,8 +53,9 @@ class AppFixtures extends Fixture
             $pin = new Pin();
             $pin->setTitle("Pin".$i);
             $pin->setDescription($this->faker->text(500));
-            $pin->setApproved(0);
-            $pin->setUser($this->users[rand(0,20)]);
+            $pin->setApproved(1);
+            $pin->setImageName("https://picsum.photos/id/1".$i."/700/700");
+            $pin->setUser($this->users[rand(0,19)]);
             $manager->persist($pin);
             $this->pins[]=$pin;
 

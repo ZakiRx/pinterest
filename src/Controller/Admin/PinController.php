@@ -46,6 +46,19 @@ class PinController extends AbstractController
             "pins"=>$pins
             ]);
     }
+    /*Pins Each User*/
+    /**
+     * @Route("/user/profile/pins", name="user_pins")
+     */
+    public function PinsUSer():Response
+    {
+        $pins=$this->repository->findBy(['user'=>$this->getUser()],['createdAt'=>'DESC']);
+
+        return $this->render("user/pins.html.twig",[
+            "pins"=>$pins
+        ]);
+    }
+
     /**
      * @Route("/", name="pins_index")
      */
@@ -75,11 +88,19 @@ class PinController extends AbstractController
                     $message="";
                     if(in_array("ROLE_ADMIN" , $this->getUser()->getRoles())){
                         $pin->setApproved(1);
+<<<<<<< HEAD
                         $message="Pin Has Been Added";
                     }else{
                         $pin->setApproved(0);
                         $message="Pin Has Been Added Wait Confirm Your Pin By Moderator";
                     }
+=======
+
+                    }
+                    else
+                    $pin->setApproved(0);
+
+>>>>>>> 64754af55e0098b160c8982e586afc61e4952f57
                     $this->em->persist($pin);
                     $this->em->flush();
                     $this->addFlash("success", $message);

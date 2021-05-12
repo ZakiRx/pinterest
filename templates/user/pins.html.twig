@@ -1,0 +1,61 @@
+{% extends 'layout/partials/_user_dashboard.html.twig' %}
+
+{% block title 'List Pin' %}
+
+{% block body %}
+    <h2 class="text-center mb-3"> List Pins</h2>
+    <a href="{{ path('create_pin') }}" class="btn btn-primary mb-3">New Pin</a>
+
+    {% include('layout/partials/_flashe_messages.html.twig') %}
+    <div class="row list-pins">
+        <table class="table table-bordered table-striped pins">
+            <thead>
+            <th>Image</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Crated At</th>
+            <th>Approved</th>
+            <th>Action</th>
+            </thead>
+            <tbody>
+            {% for pin in pins %}
+                <tr>
+                    <td>
+                        {% if( 'https' in pin.imageName ) %}
+                            <img src="{{ pin.imageName }}" width="250px" class="img-pin">
+                        {% else %}
+                            <<img src="{{ (pin.imageName? vich_uploader_asset(pin) : asset('images/pins/default.jpeg'))|imagine_filter("thumb_background") }}" alt="{{ pin.title }}" class="img-pin">
+                        {% endif %}
+                    </td>
+                    <td>{{ pin.title }}</td>
+                    <td>{{ pin.description }}</td>
+                    <td>{{ pin.createdAt |ago }}</td>
+                    <td>
+                        {% if   pin.approved == 1 %}
+                            <span class="badge badge-success">Approved</span>
+                        {% else %}
+                            <span class="badge badge-danger">Not yet</span>
+                            <form method="post" action="{{ path('approve_pin',{id:pin.id}) }}" class="d-inline">
+                                <input type="submit" class="badge badge-dark py-1 px-2 d-inline" value="Approved Pin">
+                            </form>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if app.user.id == pin.user.id %}
+                            <a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-warning">Edit</a>
+                        {% endif %}
+                        <form onsubmit="return confirm('Are you sure ?');" method="post" action="{{ path('delete_pin',{id:pin.id}) }}" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete_pin'~pin.id) }}">
+                            <input type="submit" class="border-0 btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            <table>
+    </div>
+
+
+{% endblock %}

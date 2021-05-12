@@ -24,6 +24,16 @@ class CommentController extends AbstractController
     }
 
     /**
+     * @Route("/admin/comments",name="admin_comments")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public  function  index(){
+        $comments =$this->repository->findBy([],['createdAt'=>'DESC']);
+        return $this->render("Admin/comment/index.html.twig",[
+            "comments"=>$comments
+        ]);
+    }
+    /**
      * @Route("/pin/{id}/comment",name="pin_add_comment")
      * @param Pin $pin
      * @param Request $request
@@ -63,20 +73,22 @@ class CommentController extends AbstractController
 
     }
     /**
-     * @Route("/pin/{id}/comment/delete",name="pin_delete_comment")
-     * @param Pin $pin
-     * @param Request $request
-     * @param DateTimeFormatter|null $dateTimeFormatter
-     * @return JsonResponse
+     * @Route("/comment/{id}/delete",name="delete_comment",methods={"DELETE"})
+     * @param Comment $comment
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public  function delete(Pin $pin,Request $request,?DateTimeFormatter $dateTimeFormatter): JsonResponse
+    public  function delete(Comment $comment,Request $request)
     {
-        $comment=$this->repository->findOneBy(['pinid'=>$pin,
-            'userid'=>$this->getUser()]);
-        if($comment){
-            $this->em->remove($comment);
-            $this->em->flush();
+        if($this->isCsrfTokenValid("comment_".$comment->getId(),$request->get("_token")))
+        {
+            if($comment){
+                $this->em->remove($comment);
+                $this->em->flush();
+                return $this->redirectToRoute("admin_comments");
+            }
         }
+
+        return $this->redirectToRoute("admin_comments");
     }
 
 

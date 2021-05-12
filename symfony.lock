@@ -137,7 +137,11 @@
         "version": "2.2.3"
     },
     "php": {
+<<<<<<< HEAD
         "version": "7.4"
+=======
+        "version": "7.3"
+>>>>>>> 64754af55e0098b160c8982e586afc61e4952f57
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"

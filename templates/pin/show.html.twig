@@ -8,9 +8,13 @@
          <div class="col-md-6  mb-4">
              <article class="rounded  ">
                  <div class="pin-img overflow-hidden">
+                     {% if( 'https' in pin.imageName ) %}
+                         <img src="{{ pin.imageName }}" width="100%">
+                     {% else %}
+                         <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
+                         imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
+                     {% endif %}
 
-                     <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('images/pins/default.jpeg')) |
-                     imagine_filter("thumb_background")}}" alt="{{ pin.title }}" class="w-100" />
 
                  </div>
                  <div class="content p-3">
@@ -24,7 +28,11 @@
                      </div>
 
                  </div>
+<<<<<<< HEAD
                  {% if  app.user is not null and app.user.id == pin.user.id %}
+=======
+                 {% if app.user is not null and app.user.id == pin.user.id %}
+>>>>>>> 64754af55e0098b160c8982e586afc61e4952f57
 
                      <div class="actions py-2 px-3">
                          <a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-light">Edit</a>
@@ -41,14 +49,18 @@
          </div>
          <div class="col-md-6">
              <div class="comments">
-                 <h4>Comments</h4>
+                 <h4 class="mb-4 h5">Comments</h4>
                  <div class="list-comment">
                      {% for comment in pin.comments %}
                          <div class="col-lg-12">
                              <div class="comment">
                                  <div class="d-flex">
                                      <img src="{{ asset('images/pins/5ad68890d7289-thumb900-5f87834d446a6911649320.jpg') }}" class="rounded-circle mr-1" alt="" width="42px" height="42px">
-                                     <p class="content" >{{ comment.getComment}}</p>
+                                     <p class="content" >
+                                         <span class="font-weight-bold">{{ comment.userid.username }}</span>
+                                         <br>
+                                         {{ comment.getComment}}
+                                     </p>
                                  </div>
                                  <small class="date-comment">{{ comment.createdAt|ago}}</small>
                              </div>
@@ -57,7 +69,11 @@
 
                      {% endfor %}
                  </div>
+<<<<<<< HEAD
                  {% if app.user is not null %}
+=======
+                 {% if app.user %}
+>>>>>>> 64754af55e0098b160c8982e586afc61e4952f57
                  <div class="col-lg-12">
                      <div class="comment ">
                          <div class="d-flex">

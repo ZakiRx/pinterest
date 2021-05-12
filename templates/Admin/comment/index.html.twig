@@ -1,0 +1,40 @@
+{% extends 'Admin/dashboard.html.twig' %}
+
+{% block title 'List Comment' %}
+
+{% block body %}
+    <h2 class="text-center mb-3"> List Comment</h2>
+
+    {% include('layout/partials/_flashe_messages.html.twig') %}
+    <div class="row list-user">
+        <table class="table table-bordered table-striped users">
+
+            <thead>
+            <th>Image</th>
+            <th>userName</th>
+            <th>Comment</th>
+            <th>Action</th>
+            </thead>
+            <tbody>
+            {% for comment in comments %}
+                <tr>
+                    <td>#</td>
+                    <td>{{ comment.Userid.username }}</td>
+                    <td>{{ comment.comment }} </td>
+                    <td>
+                        <form onsubmit="return confirm('Are you sure ?');" method="post" action="{{ path('delete_comment',{id:comment.id}) }}" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token("comment_"~comment.id) }}">
+                            <input type="submit" class="border-0 btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
