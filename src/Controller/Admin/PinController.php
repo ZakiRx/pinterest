@@ -20,14 +20,14 @@ class PinController extends AbstractController
 
     private $em;
     private $repository;
-    private $isVerified="";
+    private $isVerified = "";
 
 
-    public  function  __construct(EntityManagerInterface $em,PinRepository $repository,Security $security)
+    public function __construct(EntityManagerInterface $em, PinRepository $repository, Security $security)
     {
-        $this->em=$em;
-        $this->repository=$repository;
-        if($security->getUser()) {
+        $this->em = $em;
+        $this->repository = $repository;
+        if ($security->getUser()) {
             $user = $security->getUser();
             if ($user instanceof User) {
                 $this->isVerified = $user->isVerified();
@@ -38,45 +38,47 @@ class PinController extends AbstractController
     /**
      * @Route("/admin/pins", name="admin_pins_index")
      */
-    public function index():Response
+    public function index(): Response
     {
-        $pins=$this->repository->findBy([],['createdAt'=>'DESC']);
+        $pins = $this->repository->findBy([], ['createdAt' => 'DESC']);
 
-        return $this->render("Admin/pin/index.html.twig",[
-            "pins"=>$pins
-            ]);
+        return $this->render("Admin/pin/index.html.twig", [
+            "pins" => $pins
+        ]);
     }
     /*Pins Each User*/
     /**
      * @Route("/user/profile/pins", name="user_pins")
      */
-    public function PinsUSer():Response
+    public function PinsUSer(): Response
     {
-        $pins=$this->repository->findBy(['user'=>$this->getUser()],['createdAt'=>'DESC']);
+        $pins = $this->repository->findBy(['user' => $this->getUser()], ['createdAt' => 'DESC']);
 
-        return $this->render("user/pins.html.twig",[
-            "pins"=>$pins
+        return $this->render("user/pins.html.twig", [
+            "pins" => $pins
         ]);
     }
 
     /**
      * @Route("/", name="pins_index")
      */
-    public function pins():Response
+    public function pins(): Response
     {
-        $pins=$this->repository->approvedPins();
+        $pins = $this->repository->approvedPins();
 
-        return $this->render("pin/index.html.twig",[
-            "pins"=>$pins
+        return $this->render("pin/index.html.twig", [
+            "pins" => $pins
         ]);
     }
+
     /**
      * @Route("/pin/create",name="create_pin",methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
-    public function  new(Request $request):Response{
-        if($this->isVerified) {
+    public function  new(Request $request): Response
+    {
+        if ($this->isVerified) {
             $pin = new Pin();
 
             $form = $this->createForm(PinType::class, $pin);
@@ -85,46 +87,34 @@ class PinController extends AbstractController
             if ($this->isCsrfTokenValid("pin" . $pin->getId(), $request->get("_token"))) {
                 if ($form->isSubmitted() && $form->isValid()) {
                     $pin->setUser($this->getUser());
-                    $message="";
-                    if(in_array("ROLE_ADMIN" , $this->getUser()->getRoles())){
+                    $message = "";
+                    if (in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
                         $pin->setApproved(1);
-<<<<<<< HEAD
-                        $message="Pin Has Been Added";
-                    }else{
+                        $message = "Pin Has Been Added";
+                    } else {
                         $pin->setApproved(0);
-                        $message="Pin Has Been Added Wait Confirm Your Pin By Moderator";
+                        $message = "Pin Has Been Added Wait Confirm Your Pin By Moderator";
                     }
-=======
 
-                    }
-                    else
-                    $pin->setApproved(0);
-
->>>>>>> 64754af55e0098b160c8982e586afc61e4952f57
-                    $this->em->persist($pin);
-                    $this->em->flush();
-                    $this->addFlash("success", $message);
-                    return $this->redirectToRoute("pins_index");
-
-                } else {
-                    return $this->render("pin/new.html.twig", [
-                        "pin" => $pin,
-                        "form" => $form->createView(),
-
-                    ]);
                 }
+                $this->em->persist($pin);
+                $this->em->flush();
+                $this->addFlash("success", $message);
+                return $this->redirectToRoute("pins_index");
+
+            } else {
+                return $this->render("pin/new.html.twig", [
+                    "pin" => $pin,
+                    "form" => $form->createView(),
+
+                ]);
             }
 
-            return $this->render("pin/new.html.twig", [
-                "pin" => $pin,
-                "form" => $form->createView(),
-            ]);
         }
-        else
-        {
-            return $this->redirectToRoute("pins_index");
-        }
+
+
     }
+
 
     /**
      * @Route("/pin/{id}",name="show_pin",methods={"GET"})
@@ -133,9 +123,11 @@ class PinController extends AbstractController
      * @return Response
      */
 
-    public  function show(Pin $pin,Request $request){
+    public
+    function show(Pin $pin, Request $request)
+    {
 
-        return $pin->getApproved() ? $this->render("pin/show.html.twig",compact("pin")) : $this->redirectToRoute("pins_index");
+        return $pin->getApproved() ? $this->render("pin/show.html.twig", compact("pin")) : $this->redirectToRoute("pins_index");
     }
 
     /**
@@ -144,8 +136,10 @@ class PinController extends AbstractController
      * @param Pin $pin
      * @return Response
      */
-    public function  edit(Request $request,Pin $pin){
-        if($this->isVerified && $pin->getUser() == $this->getUser()) {
+    public
+    function edit(Request $request, Pin $pin)
+    {
+        if ($this->isVerified && $pin->getUser() == $this->getUser()) {
 
             $form = $this->createForm(PinType::class, $pin, [
                 "method" => "PUT"
@@ -165,17 +159,16 @@ class PinController extends AbstractController
                     ]);
                 }
 
-
             }
 
             return $this->render("pin/edit.html.twig", [
                 "form" => $form->createView(),
                 "pin" => $pin
             ]);
-        }
-        else
-           return $this->redirectToRoute("pins_index");
+        } else
+            return $this->redirectToRoute("pins_index");
     }
+
     /**
      * @Route("/pin/approved/{id}",name="approve_pin",methods={"POST"})
      * @param Pin $pin
@@ -183,11 +176,13 @@ class PinController extends AbstractController
      * @return Response
      */
 
-    public  function approvedPin(Pin $pin,Request $request){
+    public
+    function approvedPin(Pin $pin, Request $request)
+    {
         $pin->setApproved(1);
         $this->em->persist($pin);
         $this->em->flush();
-        $this->addFlash("success","Pin Has Benn Approved");
+        $this->addFlash("success", "Pin Has Benn Approved");
         return $this->redirectToRoute("admin_pins_index");
     }
 
@@ -197,7 +192,8 @@ class PinController extends AbstractController
      * @param Pin $pin
      * @return Response
      */
-    public function  delete(Request $request,Pin $pin)
+    public
+    function delete(Request $request, Pin $pin)
     {
 
         if ($this->isVerified && $pin->getUser() == $this->getUser()) {
@@ -211,9 +207,8 @@ class PinController extends AbstractController
             return $this->redirectToRoute("pins_index");
 
 
-        }
-        else
-           return $this->redirectToRoute("pins_index");
+        } else
+            return $this->redirectToRoute("pins_index");
     }
 
 
